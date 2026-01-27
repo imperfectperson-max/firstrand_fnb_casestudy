@@ -1,0 +1,9 @@
+Metric,Value
+Total Samples,10000
+Training Samples,8000
+Test Samples,2000
+Number of Features,23
+Fraud Percentage,5.00%
+Fraud Count,500
+Non-Fraud Count,9500
+Imbalance Ratio,1:19.0

@@ -1,0 +1,4 @@
+Scenario,Fraud Detected,False Alarms,Total Cost
+Current (No Model),0.0,0.0,N/A
+With Model (Default Threshold),49.0,2.0000000000000018,N/A
+With Model (Optimized Threshold),67.0,4.0,"$-1,930"
