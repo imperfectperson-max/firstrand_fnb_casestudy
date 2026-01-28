@@ -9,12 +9,12 @@
 
 ## 🎯 Executive Summary
 
-Our comprehensive analysis of FNB's transaction data has uncovered critical fraud patterns and developed a production-ready machine learning solution that can detect **49% of fraudulent transactions with 98% precision**. This document provides actionable, data-driven recommendations to strengthen FNB's fraud prevention strategy.
+Our comprehensive analysis of FNB's transaction data has uncovered critical fraud patterns and developed a production-ready machine learning solution that can **detect 49% of fraudulent transactions (recall) while maintaining 98% precision** (meaning when the model flags a transaction as fraudulent, it's correct 98% of the time). This document provides actionable, data-driven recommendations to strengthen FNB's fraud prevention strategy.
 
 ### Key Achievements
 - ✅ **98% Precision**: When our model flags a transaction as fraudulent, it's correct 98% of the time
 - ✅ **49% Recall**: Successfully identifies half of all fraud attempts
-- ✅ **Cost Optimization**: Estimated savings of **R1,930 per 100 transactions**
+- ✅ **Cost Optimization**: Estimated savings of **R1,930 per 100 transactions** (based on threshold optimization analysis: optimal threshold 0.1 vs. baseline, assuming R100 cost per missed fraud, R10 per false alarm, R90 benefit per detection)
 - ✅ **Production-Ready**: Gradient Boosting model ready for immediate deployment
 
 ### Critical Findings
@@ -49,11 +49,11 @@ Based on our Gradient Boosting model analysis:
 
 | Rank | Feature | Importance Score | Standard Deviation | Key Insight |
 |------|---------|-----------------|-------------------|-------------|
-| 1 | **Hour** | 0.7588 | ±0.3166 | Time patterns are THE strongest fraud predictor |
-| 2 | **Amount** | 0.4984 | ±0.4305 | Unusual spending amounts flag suspicious activity |
-| 3 | **Velocity (Last 10min)** | 0.4840 | ±0.3000 | Multiple rapid transactions indicate card testing |
-| 4 | **Device Change** | 0.4776 | ±0.4330 | Device switches are highly suspicious |
-| 5 | **Multiple Risk Factors** | 0.4260 | ±0.3724 | Combined risk indicators amplify fraud likelihood |
+| 1 | **Hour** | 0.76 | ±0.32 | Time patterns are THE strongest fraud predictor |
+| 2 | **Amount** | 0.50 | ±0.43 | Unusual spending amounts flag suspicious activity |
+| 3 | **Velocity (Last 10min)** | 0.48 | ±0.30 | Multiple rapid transactions indicate card testing |
+| 4 | **Device Change** | 0.48 | ±0.43 | Device switches are notable fraud indicators (though variable) |
+| 5 | **Multiple Risk Factors** | 0.43 | ±0.37 | Combined risk indicators amplify fraud likelihood |
 
 **Actionable Insight:** These 5 features alone provide 80%+ of the model's predictive power. Focus fraud prevention efforts here.
 
@@ -81,14 +81,14 @@ Based on our Gradient Boosting model analysis:
 **Red Flags Identified:**
 - **Distance >100km from last transaction:** Strong fraud indicator
 - **High-Risk Countries:** Specific countries show >15% fraud rates
-- **Impossible Travel:** Transactions with velocity >200 km/hr (geographically impossible)
+- **Suspicious Travel Velocity:** Transactions with velocity >800 km/hr between consecutive transactions (physically impossible without air travel, suggesting compromised card use at multiple locations)
 
 **Recommendation:** Implement geofencing and velocity checks for all card-not-present transactions.
 
 ### 6. User Behavior Patterns
 
 **Device Changes:**
-- **47.8% higher fraud rate** when device ID changes
+- **47.8% higher fraud rate** when device ID changes (note: high variability in this indicator, so best used in combination with other risk factors)
 - New device usage combined with other risk factors creates compound risk
 
 **Transaction Velocity:**
@@ -128,7 +128,7 @@ Based on our Gradient Boosting model analysis:
 - Detect 49% of fraud attempts automatically
 - Reduce investigation costs by 98% accuracy on flagged transactions
 - Save R1,930 per 100 transactions processed
-- **Annual savings estimate:** If processing 10M transactions/year = R193M potential savings
+- **Annual savings estimate:** If processing 10M transactions/year = R193M potential savings (NOTE: This is an extrapolation from 10,000 analyzed transactions and assumes linear scaling. Actual savings should be validated with production data at scale, as fraud patterns may differ across larger volumes and time periods)
 
 **Risk Mitigation:**
 - Start in shadow mode to validate before blocking transactions
@@ -200,8 +200,9 @@ Based on our Gradient Boosting model analysis:
 
 2. **Geographic Velocity:**
    - Calculate km/minute between transactions
-   - Block if >200 km/hr (impossible travel)
-   - Alert if >100 km/hr (unlikely travel, e.g., domestic flight)
+   - Block if >800 km/hr (impossible without aircraft, suggesting fraud)
+   - Alert if >400 km/hr (possible with high-speed travel, requires verification)
+   - Note: For card-present transactions, use more conservative thresholds based on ground transportation speeds
 
 3. **Amount Velocity:**
    - Track total transaction amount per hour
@@ -474,7 +475,7 @@ Based on our Gradient Boosting model analysis:
 | 11-12 | Model monitoring dashboard | Data Science Team | Real-time metrics visible to fraud team |
 
 **Budget Estimate:** R2-3M (Infrastructure, personnel, SMS costs)  
-**Expected ROI:** 300-400% (R6-12M annual fraud loss reduction)
+**Expected ROI:** 300-400% (R6-12M incremental annual fraud loss reduction from Phase 1 initiatives)
 
 ### Phase 2: Strategic Enhancements (3-9 Months)
 
@@ -489,8 +490,8 @@ Based on our Gradient Boosting model analysis:
 | 7-8 | Merchant intelligence integration | Better merchant risk assessment |
 | 8-9 | Industry collaboration framework | Shared fraud intelligence |
 
-**Budget Estimate:** R5-7M (Additional tooling, personnel, partnerships)  
-**Expected ROI:** 200-300% (R10-21M annual benefit)
+**Budget Estimate:** R5-7M (Additional tooling, personnel, partnerships - incremental on top of Phase 1)  
+**Expected ROI:** 200-300% (R10-21M additional annual benefit from Phase 2, incremental to Phase 1 benefits)
 
 ### Phase 3: Advanced Capabilities (9-18 Months)
 
@@ -504,8 +505,11 @@ Based on our Gradient Boosting model analysis:
 | Q3 | Full fraud prevention platform | Comprehensive solution |
 | Q4 | Industry thought leadership | Market differentiation |
 
-**Budget Estimate:** R10-15M (Advanced technology, R&D, scaling)  
-**Expected ROI:** 150-250% (R15-35M annual benefit)
+**Budget Estimate:** R10-15M (Advanced technology, R&D, scaling - incremental on top of Phases 1-2)  
+**Expected ROI:** 150-250% (R15-35M additional annual benefit from Phase 3, incremental to previous phases)
+
+**Total Program Investment:** R17-25M across all phases  
+**Total Expected Annual Benefit:** R31-68M (cumulative from all phases), representing 125-270% overall ROI
 
 ---
 
@@ -555,8 +559,8 @@ Based on our Gradient Boosting model analysis:
 ### Business Impact Metrics (Monitor Quarterly)
 
 11. **Total Fraud Loss:**
-    - Current: R193M potential annual savings identified
-    - Target: Achieve 50% of potential savings in year 1
+    - Current: R193M potential annual savings identified (estimated, requires validation at scale)
+    - Target: Achieve 50% of potential savings in year 1 (R96.5M target, pending validation of baseline assumptions)
 
 12. **Cost per Transaction:**
     - Include fraud losses + investigation costs
